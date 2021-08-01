@@ -12,12 +12,14 @@ public class Board {
     }
 
     public Figure getFigure(int row, int col){
-
+        BoardRow currentRow = board.get(row-1);
+        return currentRow.getFigure(col);
     }
-//    public void setFigure(int row, int col, Figure figure){
-//
-//    }
-//
+    public void setFigure(int row, int col, Figure figure){
+        BoardRow currentRow = board.get(row-1);
+        currentRow.setFigure(col, figure);
+    }
+
     public String toString(){
         Iterator<BoardRow> iterator = board.listIterator();
         String board = "";

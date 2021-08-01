@@ -10,6 +10,15 @@ public class BoardRow {
         }
     }
 
+    public Figure getFigure(int col) {
+        return row.get(col-1);
+    }
+
+    public void setFigure(int col, Figure figure){
+        row.remove(col-1);
+        row.add(col-1, figure);
+    }
+
     @Override
     public String toString() {
         Iterator<Figure> iterator = row.listIterator();
