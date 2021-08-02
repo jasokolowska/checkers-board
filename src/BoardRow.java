@@ -24,9 +24,9 @@ public class BoardRow {
         Iterator<Figure> iterator = row.listIterator();
         String row = "";
         while (iterator.hasNext()) {
-            row += (" |  " + iterator.next().toString());
+            row += ("  |  " + iterator.next().toString());
         }
-        return row + " |  ";
+        return row + "  |";
     }
 }
-// numer indeksu w boardrow to wiersz, a numer indeksu w board to kolumna
+

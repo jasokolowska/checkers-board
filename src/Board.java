@@ -20,10 +20,64 @@ public class Board {
         currentRow.setFigure(col, figure);
     }
 
+    public boolean move(int row1, int col1, int row2, int col2) {
+        // 3. sprawdz czy na danym polu znajduje sie pionek lub czy na polu, na ktore mamy sie przesunac nie ma juz pionka
+        //jesli nie zwroc false - ruchu nie mozna wykonac
+        //jesli tak, to sprawdz czy pole na ktore ma sie przesunac pionek znajduje sie na planszy
+        //jesli nie zwroc false - ruchu nie mozna wykonac
+        //jeśli tak, to sprawdz kolejne warunki
+        if (getFigure(row1, col1).toString() != " " || getFigure(row2, col2).toString() == " " &&
+                (row2 < 8 && row2 >= 0 && col2 < 8 )) {
+            // 1. sprawdz czy podane wspolrzedne pozwalaja przesunac się po skosie
+            // sa tutaj 2 przypadki:
+            // a) w dól prawo, w górę lewo
+            //      row1 - row2 == col1 - col2
+            // b) w dół lewo, w górę prawo
+            //      row1 + col1 == row2 + col2
+
+            if (row1 - row2 == col1 - col2 || row1 + col1 == row2 + col2) {
+                // 2. sprawdz odleglosc na jaka pionek ma sie przesunac (należy sprawdzić jaka figura znajduje się na danym polu)
+                // w przypadku pionka poprawne sa 2 przypadki - o 1 pole
+                // i o 2 pola (tylko w wypadku gdy na pierwszym kolejnym polu znajduje się pionek o przeciwnym kolorze)
+                // w przypadku damki nie ma ograniczen
+                if (Math.abs(row1 - row2) == 1) {
+                    //wykonaj ruch
+                    Figure figure = getFigure(row1, col1);
+                    setFigure(row1, col1, new None("black"));
+                    setFigure(row2, col2, figure);
+                    System.out.println("Figure: " + figure.toString() + "(" + row1 + "," + col1 + ")" +" has been moved to field " + row2 + "," + col2);
+                    return true;
+//                } else if (row1 - row2 == 2) {
+                    //sprawdz czy na kolejnym polu znajduje sie sie pionek z przeciwnym znakiem
+                    // zbij pionek i wykonaj ruch
+                } else {
+                    if (getFigure(row1, col1).toString() != "Q") {
+                        System.out.println("Only Queen can move more than one field at a time");
+                        return false;
+                    } else {
+                        // wykonaj ruch
+                        Figure figure = getFigure(row1, col1);
+                        setFigure(row1, col1, new None("black"));
+                        setFigure(row2, col2, figure);
+                        System.out.println("Figure: " + figure.toString() + "(" + row1 + "," + col1 + ")" +" has been moved to field " + row2 + "," + col2);
+                        return true;
+                    }
+                }
+
+            } else {
+                System.out.println("This move is not allowed, you can move diagonally");
+                return false;
+            }
+        } else {
+            System.out.println("Move not possible");
+            return false;
+        }
+    }
+
     public String toString(){
         Iterator<BoardRow> iterator = board.listIterator();
         String board = "";
-        String midLinePattern = "\n |----|----|----|----|----|----|----|----|\n";
+        String midLinePattern = "\n  |-----|-----|-----|-----|-----|-----|-----|-----|\n";
         while (iterator.hasNext()) {
             board += (iterator.next().toString() + midLinePattern);
         }
