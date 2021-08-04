@@ -20,6 +20,7 @@ public class Board {
         currentRow.setFigure(col, figure);
     }
 
+
     public boolean move(int row1, int col1, int row2, int col2) {
 
         if (getFigure(row1, col1).toString() != " " || getFigure(row2, col2).toString() == " " &&
